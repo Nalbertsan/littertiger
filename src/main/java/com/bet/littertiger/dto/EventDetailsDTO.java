@@ -1,8 +1,6 @@
 package com.bet.littertiger.dto;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Map;
 
 

@@ -92,7 +92,7 @@ public class BlockchainController {
     }
 
     @GetMapping("/balance-contract/{contractAddress}/{privateKey}")
-    public ResponseEntity<Map<String, Object>> getMyBalance(
+    public ResponseEntity<BigInteger> getMyBalance(
             @PathVariable String contractAddress,
             @PathVariable String privateKey
     ) {
@@ -100,17 +100,9 @@ public class BlockchainController {
             // Obter saldo em Wei
             BigInteger balanceWei = blockchainService.getMyBalance(contractAddress, privateKey);
 
-            // Converter saldo para Ether
-            BigDecimal balanceEther = blockchainService.convertToEther(balanceWei);
-
-            // Criar resposta
-            Map<String, Object> response = new HashMap<>();
-            response.put("balanceInWei", balanceWei);
-            response.put("balanceInEther", balanceEther);
-
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(balanceWei);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+            return ResponseEntity.badRequest().body((BigInteger) Map.of("error", e.getMessage()));
         }
     }
 }
